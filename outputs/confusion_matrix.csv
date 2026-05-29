@@ -1,0 +1,9 @@
+Ground Truth,fearful,happy,neutral,surprised
+angry,0,0,1,0
+calm,0,0,2,0
+disgust,0,1,0,0
+fearful,1,0,0,1
+happy,0,1,0,0
+neutral,0,0,1,0
+sad,0,0,1,0
+surprised,0,0,1,0

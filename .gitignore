@@ -1,0 +1,37 @@
+# Ambiente virtual
+venv/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Dataset local
+dataset/
+
+# Pesos/modelos baixados automaticamente
+.deepface/
+*.h5
+*.ckpt
+*.pth
+*.pt
+
+# Outputs pesados
+outputs/annotated_videos/
+*.mp4
+*.avi
+*.mov
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+venv/
+dataset/
+outputs/annotated_videos/
+*.mp4
