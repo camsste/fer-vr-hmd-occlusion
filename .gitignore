@@ -1,37 +1,80 @@
-# Ambiente virtual
+# Ambientes virtuais
 venv/
 .venv/
+venv_poster/
+venv_qcs/
+venv_train/
+venv_gerador/
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.pytest_cache/
+.ipynb_checkpoints/
 
-# Dataset local
+# Datasets locais e versões processadas
 dataset/
+dataset_processado/
 
-# Pesos/modelos baixados automaticamente
+# Resultados gerados localmente
+outputs/
+results/
+logs/
+
+# Arquivos grandes intermediários
+*.npy
+*.npz
+
+# Vídeos pesados
+*.mp4
+*.avi
+*.mov
+
+# Modelos, pesos e checkpoints
 .deepface/
 *.h5
 *.ckpt
 *.pth
 *.pt
-
-# Outputs pesados
-outputs/annotated_videos/
-*.mp4
-*.avi
-*.mov
+*.onnx
+*.pkl
 
 # Sistema
 .DS_Store
 Thumbs.db
 
-# VS Code
+# IDEs
 .vscode/
+.idea/
 
-venv/
-dataset/
-outputs/annotated_videos/
-*.mp4
+# Código e versões não usados no experimento final
+POSTER_V2_old/
+Dual-EmoNet/
+
+# Pesos e caches internos dos modelos
+POSTER_V2/checkpoint/
+POSTER_V2/models/pretrain/
+POSTER_V2/**/__pycache__/
+
+QCS/checkpoint/
+QCS/models/pretrain/
+QCS/**/__pycache__/
+
+# Arquivos de pesos compactados
+*.tar
+
+# Artefatos do baseline antigo RAVDESS / EfficientNet
+metadata/
+results_train/
+scripts_train/
+
+# Artefatos do baseline antigo RAVDESS / EfficientNet
+metadata/
+results_train/
+scripts_train/
+
+# Scripts legados do pipeline em vídeo com RAVDESS/DeepFace
+scripts/02_gerar_videos.py
+scripts/02_extrator_coordenadas.py
