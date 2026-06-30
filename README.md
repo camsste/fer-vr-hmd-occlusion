@@ -426,7 +426,6 @@ Esses arquivos podem ser grandes, conter pesos pré-treinados ou depender de lic
 
 - Camile Stefany da Silva
 - Gustavo Camargo Domingues
-- Jonas Ferreira Silva
 - Lívia Silva Oliveira
 
 ---
