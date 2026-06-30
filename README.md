@@ -1,4 +1,4 @@
-# RAVDESS Emotion Recognition - Frame-by-Frame Baseline
+# Facial Expression Recognition under Simulated VR Occlusion
 
 Este repositório contém um pipeline inicial para reconhecimento emocional em vídeos do dataset RAVDESS. A abordagem utilizada nesta primeira versão é frame-a-frame, ou seja, o vídeo é analisado a partir de seus frames para prever a emoção apresentada.
 
