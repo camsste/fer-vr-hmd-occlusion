@@ -1,81 +1,88 @@
 # Facial Expression Recognition under Simulated VR HMD Occlusion
 
-Este repositório contém o código desenvolvido para avaliar o impacto da oclusão causada por Head-Mounted Displays (HMDs) de Realidade Virtual no reconhecimento automático de expressões faciais.
+This repository contains the code developed to evaluate the impact of Virtual Reality Head-Mounted Display (HMD) occlusion on Facial Expression Recognition (FER).
 
-O experimento compara dois modelos de Facial Expression Recognition (FER), **POSTER++** e **QCS**, utilizando os datasets **RAF-DB** e **AffectNet+** sob quatro cenários de visualização facial:
+The experiment compares two FER models, **POSTER++** and **QCS**, using the **RAF-DB** and **AffectNet+** datasets under four facial-visibility scenarios:
 
-- Baseline;
-- HMD;
-- HMD-Eyes;
-- Real HMD-Eyes.
+- Baseline
+- HMD
+- HMD-Eyes
+- Real HMD-Eyes
 
-O objetivo é analisar como a oclusão da região superior da face, especialmente olhos e sobrancelhas, afeta o desempenho dos modelos e verificar se a inserção de informações visuais na região ocluída pode reduzir essa perda de desempenho.
-
----
-
-## Visão geral
-
-Modelos de reconhecimento de expressões faciais normalmente utilizam informações visuais de toda a face, incluindo olhos, sobrancelhas, testa, boca e relações espaciais entre essas regiões.
-
-No entanto, em aplicações de Realidade Virtual, o uso de headsets cobre uma parte importante da região superior da face. Para investigar esse impacto de forma controlada, este projeto gera diferentes versões das mesmas imagens faciais e avalia os modelos sob condições equivalentes.
-
-O pipeline desenvolvido realiza:
-
-1. organização das imagens originais dos datasets;
-2. detecção de landmarks faciais;
-3. geração dos cenários de oclusão;
-4. inserção de olhos geométricos e olhos mais realistas;
-5. execução dos modelos POSTER++ e QCS;
-6. cálculo de métricas globais e por classe;
-7. geração de relatórios e matrizes de confusão normalizadas.
+The goal is to investigate how upper-face occlusion, especially around the eyes and eyebrows, affects model performance and whether inserting visual eye information can partially mitigate this degradation.
 
 ---
 
-## Cenários experimentais
+## Overview
 
-Para cada imagem, são geradas quatro versões.
+Facial Expression Recognition models usually rely on information from the entire face, including the eyes, eyebrows, forehead, mouth, and spatial relationships between facial regions.
+
+In Virtual Reality applications, however, HMD devices cover a substantial part of the upper face. To study this effect in a controlled way, this project generates different versions of the same facial images and evaluates the models under equivalent experimental conditions.
+
+The implemented pipeline performs the following steps:
+
+1. Organizes the original images from RAF-DB and AffectNet+;
+2. Detects facial landmarks;
+3. Generates simulated HMD occlusion;
+4. Inserts geometric and realistic eye representations;
+5. Evaluates the images using POSTER++;
+6. Evaluates the images using QCS;
+7. Computes global and class-level metrics;
+8. Generates classification reports and normalized confusion matrices.
+
+---
+
+## Experimental Scenarios
+
+Four versions are generated for each image.
 
 ### 1. Baseline
 
-Imagem facial original, sem nenhuma modificação.
+Original facial image without any modification.
 
 ```text
 Baseline
 ```
 
-Esse cenário é utilizado como referência para comparar o desempenho dos modelos quando toda a face está visível.
+This condition is used as the reference scenario, where the complete face is visible.
+
+---
 
 ### 2. HMD
 
-Uma oclusão sintética é aplicada na região superior da face, simulando a cobertura causada por um headset de Realidade Virtual.
+A synthetic occlusion is applied to the upper facial region to simulate a Virtual Reality headset.
 
 ```text
 HMD
 ```
 
-A oclusão cobre principalmente a testa, sobrancelhas e parte da região dos olhos.
+The occlusion covers mainly the forehead, eyebrows, and part of the eye region.
+
+---
 
 ### 3. HMD-Eyes
 
-A oclusão do headset é mantida, mas olhos geométricos são inseridos na região coberta.
+The HMD occlusion remains in place, but geometric eye representations are inserted into the covered region.
 
 ```text
 HMD_Olhos
 ```
 
-Nesse cenário, são utilizados elementos visuais simples para representar os olhos, incluindo formas geométricas para esclera e íris.
+This scenario uses simple visual elements to represent the eyes, including geometric shapes for the sclera and iris.
+
+---
 
 ### 4. Real HMD-Eyes
 
-A oclusão do headset também é mantida, mas são inseridas texturas de olhos mais realistas.
+The HMD occlusion remains in place, but more realistic eye textures are inserted into the occluded region.
 
 ```text
 HMD_Olhos_Reais
 ```
 
-As texturas são ajustadas de acordo com a posição, escala e inclinação estimadas a partir dos landmarks faciais.
+The eye textures are resized, positioned, and rotated according to facial landmarks.
 
-Os arquivos utilizados como overlays de olhos são:
+The overlay files used in this scenario are:
 
 ```text
 Olho_Direito.png
@@ -84,17 +91,15 @@ Olho_Esquerdo.png
 
 ---
 
-## Modelos avaliados
+## Evaluated Models
 
-Dois modelos de reconhecimento de expressões faciais foram avaliados sob as mesmas condições experimentais.
-
-### POSTERis modelos de reconhecimento de expressões faciais foram avaliados sob as mesmas condições experimentais.
+Two Facial Expression Recognition models are evaluated under the same datasets, scenarios, and metrics.
 
 ### POSTER++
 
-POSTER++ é um modelo de reconhecimento de expressões faciais baseado em transformadores e fusão de informações faciais.
+POSTER++ is a transformer-based FER model that combines facial information through feature fusion mechanisms.
 
-A implementação e os scripts relacionados estão localizados em:
+Its implementation and evaluation scripts are located in:
 
 ```text
 POSTER_V2/
@@ -102,25 +107,25 @@ POSTER_V2/
 
 ### QCS
 
-QCS, ou Quadruplet Cross Similarity, utiliza uma estratégia de refinamento de características faciais baseada em similaridade entre exemplos.
+QCS, or Quadruplet Cross Similarity, is a FER model based on feature refinement through cross-similarity learning.
 
-A implementação e os scripts relacionados estão localizados em:
+Its implementation and evaluation scripts are located in:
 
 ```text
 QCS/
 ```
 
-Os dois modelos são executados separadamente, pois possuem dependências, pesos e configurações específicas.
+The models are executed independently because they have different dependencies, pretrained weights, and configurations.
 
 ---
 
 ## Datasets
 
-Os experimentos utilizam dois datasets de reconhecimento de expressões faciais em condições naturais.
+The experiments use two in-the-wild facial expression recognition datasets.
 
 ### RAF-DB
 
-O RAF-DB é utilizado com sete classes emocionais:
+RAF-DB is evaluated using seven emotion classes:
 
 ```text
 Surprise
@@ -134,7 +139,7 @@ Neutral
 
 ### AffectNet+
 
-Para AffectNet+, foi utilizado um subconjunto balanceado com as mesmas sete classes emocionais:
+A balanced AffectNet+ subset is evaluated using the same seven emotion classes:
 
 ```text
 Surprise
@@ -146,13 +151,11 @@ Anger
 Neutral
 ```
 
-Os datasets não estão incluídos neste repositório devido ao tamanho dos arquivos e às respectivas condições de uso.
+The datasets are not included in this repository due to size limitations and dataset usage restrictions.
 
 ---
 
-## Estrutura do projeto
-
-A estrutura esperada do repositório é:
+## Repository Structure
 
 ```text
 fer-vr-hmd-occlusion/
@@ -174,24 +177,24 @@ fer-vr-hmd-occlusion/
 │       ├── HMD_Olhos/
 │       └── HMD_Olhos_Reais/
 │
-├── metadata/
-│
-├── models/
-│
 ├── POSTER_V2/
-│   └── implementação e scripts de avaliação do POSTER++
+│   ├── 08_avaliar_poster.py
+│   ├── 08.1_avaliar_poster_affectnet.py
+│   └── requirements.txt
 │
 ├── QCS/
-│   └── implementação e scripts de avaliação do QCS
+│   ├── 09_avaliar_qcs_rafdb.py
+│   ├── 10_avaliar_qcs_affectnet.py
+│   └── requirements.txt
 │
 ├── scripts/
-│   └── scripts de processamento, geração de cenários e apoio
-│
-├── scripts_train/
-│   └── scripts relacionados a treinamento ou preparação adicional
-│
-├── results/
-│   └── resultados, relatórios e matrizes geradas localmente
+│   ├── 03_gerador_hmd.py
+│   ├── 04_injetor_olhos.py
+│   ├── 05_pipeline_geral.py
+│   ├── 06_pipeline_rafdb.py
+│   ├── 06.2_pipeline_rafdb_olhos_reais.py
+│   ├── 07_pipeline_affectnet.py
+│   └── 11_pipeline_affectnet_passagem_unica.py
 │
 ├── Olho_Direito.png
 ├── Olho_Esquerdo.png
@@ -202,11 +205,11 @@ fer-vr-hmd-occlusion/
 
 ---
 
-## Organização dos dados processados
+## Processed Dataset Organization
 
-As imagens processadas são organizadas por dataset e por cenário.
+The processed images are organized by dataset and scenario.
 
-Exemplo para AffectNet+:
+Example for AffectNet+:
 
 ```text
 dataset_processado/
@@ -217,186 +220,175 @@ dataset_processado/
     └── HMD_Olhos_Reais/
 ```
 
-A mesma lógica é aplicada ao RAF-DB.
+The same structure is used for RAF-DB.
 
-Para manter uma comparação justa, as imagens utilizadas em cada cenário devem corresponder às mesmas amostras válidas do dataset original.
+To ensure a fair comparison, the samples evaluated across all scenarios must correspond to the same valid images from the original dataset.
 
 ---
 
-## Requisitos
+## Requirements
 
-Recomenda-se utilizar Python 3.10 ou a versão compatível com os requisitos específicos de cada modelo.
-
-As dependências principais incluem bibliotecas para:
-
-```text
-PyTorch
-OpenCV
-NumPy
-Pandas
-MediaPipe
-scikit-learn
-Matplotlib
-Seaborn
-```
-
-As dependências disponíveis no projeto podem ser instaladas com:
+The root `requirements.txt` contains the dependencies required for preprocessing and scenario generation.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Como POSTER++ e QCS podem utilizar versões diferentes de algumas bibliotecas, recomenda-se manter ambientes separados para cada modelo.
+POSTER++ and QCS have their own dependency files:
+
+```text
+POSTER_V2/requirements.txt
+QCS/requirements.txt
+```
+
+Separate virtual environments are recommended because the models may require different PyTorch and library versions.
 
 ---
 
-## Criação dos ambientes virtuais
+## Environment Setup
 
-### Ambiente para POSTER++
+### Scenario Generation Environment
 
-No Windows PowerShell:
+```powershell
+python -m venv venv_gerador
+.\venv_gerador\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+### POSTER++ Environment
 
 ```powershell
 python -m venv venv_poster
 .\venv_poster\Scripts\Activate.ps1
-pip install -r requirements.txt
+pip install -r .\POSTER_V2\requirements.txt
 ```
 
-### Ambiente para QCS
-
-No Windows PowerShell:
+### QCS Environment
 
 ```powershell
 python -m venv venv_qcs
 .\venv_qcs\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
-
-Caso existam arquivos de dependências específicos dentro das pastas `POSTER_V2/` ou `QCS/`, eles devem ser utilizados de acordo com os requisitos de cada implementação.
-
----
-
-## Fluxo de execução
-
-O fluxo principal do experimento deve seguir esta ordem:
-
-```text
-1. Preparar os datasets RAF-DB e AffectNet+ localmente;
-2. Configurar os caminhos dos datasets nos scripts;
-3. Gerar os quatro cenários experimentais;
-4. Executar a avaliação com POSTER++;
-5. Executar a avaliação com QCS;
-6. Gerar relatórios por classe;
-7. Gerar matrizes de confusão normalizadas;
-8. Comparar os resultados entre modelos, datasets e cenários.
+pip install -r .\QCS\requirements.txt
 ```
 
 ---
 
-## Geração dos cenários
+## Workflow
 
-Os scripts localizados em `scripts/` são responsáveis por preparar as imagens utilizadas na avaliação.
-
-As principais etapas incluem:
+The main experimental workflow is:
 
 ```text
-- carregamento da imagem original;
-- detecção dos landmarks faciais;
-- posicionamento da oclusão HMD;
-- cálculo da rotação e dimensão da oclusão;
-- inserção de olhos geométricos;
-- inserção de olhos realistas;
-- salvamento da imagem processada no cenário correspondente.
+1. Obtain RAF-DB and AffectNet+ locally;
+2. Configure the dataset paths in the scripts;
+3. Generate the four experimental scenarios;
+4. Run POSTER++ evaluation;
+5. Run QCS evaluation;
+6. Save predictions and metrics;
+7. Generate classification reports;
+8. Generate normalized confusion matrices;
+9. Compare performance across models, datasets, and scenarios.
 ```
-
-A detecção facial é utilizada para adaptar os elementos de oclusão e os overlays à posição e inclinação de cada face.
 
 ---
 
-## Avaliação dos modelos
+## Scenario Generation
 
-Após a geração das imagens processadas, os cenários são avaliados pelos modelos POSTER++ e QCS.
+The scripts in the `scripts/` directory are responsible for generating the processed images.
 
-Para cada combinação de:
+The main steps include:
 
 ```text
-modelo × dataset × cenário
+- loading the original image;
+- detecting facial landmarks;
+- positioning the HMD occlusion;
+- computing occlusion rotation and dimensions;
+- inserting geometric eyes;
+- inserting realistic eye textures;
+- saving the processed image in the corresponding scenario folder.
 ```
 
-são geradas predições para as sete classes emocionais.
+Facial landmarks are used to adapt the occlusion and eye overlays to the position, scale, and inclination of each face.
 
-Os scripts de avaliação salvam informações como:
+---
+
+## Model Evaluation
+
+After generating the processed datasets, the images are evaluated using POSTER++ and QCS.
+
+Each evaluation corresponds to a combination of:
 
 ```text
-- rótulos verdadeiros;
-- rótulos preditos;
+Model × Dataset × Scenario
+```
+
+The scripts generate predictions for the seven emotion classes and save metrics such as:
+
+```text
 - Accuracy;
 - Macro F1-score;
 - Balanced Accuracy;
-- precisão por classe;
-- recall por classe;
-- F1-score por classe;
-- relatórios de classificação;
-- matrizes de confusão.
+- Precision per class;
+- Recall per class;
+- F1-score per class;
+- Classification reports;
+- Confusion matrices.
 ```
 
 ---
 
-## Matrizes de confusão
+## Confusion Matrices
 
-As matrizes de confusão são utilizadas para analisar o comportamento dos modelos em cada cenário.
-
-Nas matrizes:
+Normalized confusion matrices are used to analyze class-level changes under occlusion.
 
 ```text
-Linhas: rótulos verdadeiros
-Colunas: rótulos preditos
-Diagonal principal: porcentagem de classificações corretas
+Rows: true labels
+Columns: predicted labels
+Main diagonal: percentage of correctly classified samples
 ```
 
-As matrizes permitem observar quais emoções permanecem mais robustas e quais passam a ser mais confundidas após a oclusão da região superior da face.
+These matrices help identify which emotions remain comparatively robust and which emotions become more frequently confused after upper-face occlusion.
 
 ---
 
-## Resultados esperados
+## Evaluation Scope
 
-O experimento foi projetado para comparar o desempenho dos modelos nas seguintes condições:
+The experiment evaluates:
 
 ```text
-POSTER++ × RAF-DB × 4 cenários
-POSTER++ × AffectNet+ × 4 cenários
-QCS × RAF-DB × 4 cenários
-QCS × AffectNet+ × 4 cenários
+POSTER++ × RAF-DB × 4 scenarios
+POSTER++ × AffectNet+ × 4 scenarios
+QCS × RAF-DB × 4 scenarios
+QCS × AffectNet+ × 4 scenarios
 ```
 
-Totalizando:
+This results in:
 
 ```text
-16 configurações de avaliação
+16 evaluation configurations
 ```
 
-A comparação permite investigar:
+The comparison investigates:
 
 ```text
-- impacto da oclusão HMD;
-- efeito da inserção de olhos geométricos;
-- efeito da inserção de olhos mais realistas;
-- diferenças entre POSTER++ e QCS;
-- diferenças entre RAF-DB e AffectNet+;
-- alterações por classe emocional.
+- the impact of HMD occlusion;
+- the effect of geometric eye insertion;
+- the effect of realistic eye insertion;
+- differences between POSTER++ and QCS;
+- differences between RAF-DB and AffectNet+;
+- class-level changes under occlusion.
 ```
 
 ---
 
-## Arquivos que não devem ser enviados ao GitHub
+## Files Not Included in the Repository
 
-Os seguintes conteúdos devem permanecer locais ou ser compartilhados externamente:
+The following files and directories remain local or should be shared through external storage:
 
 ```text
 dataset/
 dataset_processado/
-results/
 venv/
+venv_gerador/
 venv_poster/
 venv_qcs/
 venv_train/
@@ -407,22 +399,22 @@ venv_train/
 *.pkl
 ```
 
-Esses arquivos podem ser grandes, conter pesos pré-treinados ou depender de licenças específicas.
+These files may be large, contain pretrained weights, or be subject to dataset and model usage restrictions.
 
 ---
 
-## Observações importantes
+## Notes
 
-- Os datasets RAF-DB e AffectNet+ não estão incluídos no repositório.
-- Os pesos pré-treinados dos modelos podem precisar ser obtidos separadamente.
-- Os ambientes virtuais não devem ser enviados ao GitHub.
-- Resultados pesados, imagens processadas e matrizes finais podem ser armazenados em Google Drive ou outro serviço externo.
-- Os arquivos `Olho_Direito.png` e `Olho_Esquerdo.png` fazem parte do pipeline de geração do cenário Real HMD-Eyes e podem ser mantidos no repositório.
-- Pastas antigas ou versões não utilizadas no experimento final, como implementações legadas, devem ser removidas ou movidas para uma pasta de arquivamento antes da publicação final.
+- RAF-DB and AffectNet+ are not included in this repository.
+- Pretrained model weights may need to be obtained separately.
+- Virtual environments should not be uploaded to GitHub.
+- Large processed datasets and result files can be stored externally, such as in Google Drive.
+- `Olho_Direito.png` and `Olho_Esquerdo.png` are included because they are part of the Real HMD-Eyes generation pipeline.
+- The POSTER++ and QCS source code is maintained with the corresponding license files provided in their directories.
 
 ---
 
-## Autores
+## Authors
 
 - Camile Stefany da Silva
 - Gustavo Camargo Domingues
@@ -430,8 +422,8 @@ Esses arquivos podem ser grandes, conter pesos pré-treinados ou depender de lic
 
 ---
 
-## Contexto acadêmico
+## Academic Context
 
-Este repositório foi desenvolvido para um estudo comparativo sobre reconhecimento de expressões faciais sob oclusão simulada por dispositivos de Realidade Virtual.
+This repository was developed for a comparative study on Facial Expression Recognition under simulated Virtual Reality HMD occlusion.
 
-O foco do projeto é analisar como a cobertura da região superior da face afeta modelos de reconhecimento emocional e verificar se a inserção de informações visuais na área ocluída pode recuperar parte do desempenho perdido.
+The study investigates how upper-face occlusion affects current FER models and whether generic eye reconstruction strategies can recover part of the facial information lost by the headset.
